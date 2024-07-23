@@ -26,7 +26,37 @@ export const TikTacToe = () => {
         }
     }
 
+    const checkWin =()=>{
+        if(data[0]===data[1] && data[1]===data[2] && data[0]!==""){
+            won(data);
+    }
+    else if(data[3]===data[4] && data[4]===data[5]&& data[5] !==""){
+        won(data);
+    }
+    else if(data[6]===data[7] && data[7]===data[8]&& data[8] !==""){
+        won(data);
+    }
+    else if(data[0]===data[3] && data[3]===data[6]&& data[6] !==""){
+        won(data);
+    }
+    else if(data[1]===data[4] && data[4]===data[7]&& data[7] !==""){
+        won(data);
+    }
+    else if(data[2]===data[5] && data[5]===data[8]&& data[8] !==""){
+        won(data);
+    }
 
+    }
+
+    const won = (winner) =>{
+        setLock(true);
+        if(winner==="X"){
+            tittleRef.current.innerHTML = `congratulation <img ${src='cross_icon'} />`
+        }
+        else {
+             tittleRef.current.innerHTML = `congratulation <img ${src='circle_icon'} />`
+        }
+    }
   return (
     <div className='container'>
         <h1 className='title'>Tic Tac Toe Game in <span>React</span> </h1>
