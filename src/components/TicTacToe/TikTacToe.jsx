@@ -16,11 +16,11 @@ export const TikTacToe = () => {
             return 0;
         }
         if(count%2===0){
-            e.target.innerHTML = '<img src={cross_icon} alt="cross_icon" />';
+            e.target.innerHTML = `<img src='${cross_icon}' alt="cross_icon" />`;
             data[num] = 'X';
             setCount(count+1);
         }else{
-            e.target.innerHTML = '<img src={circle_icon} alt="circle_icon" />';
+            e.target.innerHTML = `<img src='${circle_icon}' alt="circle_icon" />`;
             data[num] = 'O';
             setCount(count+1);
         }
