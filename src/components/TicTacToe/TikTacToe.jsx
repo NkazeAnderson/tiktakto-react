@@ -5,24 +5,84 @@ import circle_icon from '../Assets/tac.png'
 
 let data = ["", "", "", "", "", "", "", "", ""];
 
+const data1 = [
+ 
+]
+function checkIfExist (id){
+    return data1.some((item)=>item.selectedBox === id)
+}
+
+function checkIfExistUser (id){
+    const item = data1.find((item)=>item.selectedBox === id)
+    if (item) {
+        return item.user
+    }
+    else{
+        return null
+    }
+}
+
+function addData(data) {
+    data1.push(data)
+}
+
+function Box({id, user, setUser}) {
+
+    if (checkIfExist(id)){
+        const userFromData = checkIfExistUser(id)
+        return <div className="boces" onClick={(e)=>{
+            if (checkIfExist(id)) {
+                
+            }else{
+                addData({
+                    user: user,
+                    selectedBox: id
+                })
+                setUser(user === "x" ? "o":"x")
+            }
+            
+            
+    
+            console.log(data1)
+        }}>
+            {userFromData === "x" ? "x" : "o"}
+        </div>
+    }
+    
+    return <div className="boces" onClick={(e)=>{
+        if (checkIfExist(id)) {
+            
+        }else{
+            addData({
+                user: user,
+                selectedBox: id
+            })
+            setUser(user === "x" ? "o":"x")
+        }
+        
+
+        console.log(data1)
+    }}>
+        
+    </div>
+}
+
+
 
 export const TikTacToe = () => {
 
     let [count, setCount] = React.useState(0);
+    let [user, setUser] = React.useState("x");
     let [lock, setLock] = React.useState(false);
     let tittleRef = React.useRef(null);
 
-    const toggle = (e,num) => {
+    const toggle = (count) => {
         if(lock){
             return 0;
         }
         if(count%2===0){
-            e.target.innerHTML = `<img src='${cross_icon}' alt="cross_icon" />`;
-            data[num] = 'X';
             setCount(count+1);
         }else{
-            e.target.innerHTML = `<img src='${circle_icon}' alt="circle_icon" />`;
-            data[num] = 'O';
             setCount(count+1);
         }
         checkWin();
@@ -72,21 +132,22 @@ export const TikTacToe = () => {
     <div className='container'>
         <h1 className='title' ref={tittleRef}>Tic Tac Toe Game in <span>React</span> </h1>
         <div className="baord">
-            <div className="boces" onClick={(e)=>{toggle(e,0)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,1)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,2)}}></div>
+            <Box id={0} user={user} setUser= {setUser}/>
+            <Box id={1} user={user} setUser= {setUser}/>
+            <Box id={2} user={user} setUser= {setUser}/>
+            
         </div>
 
         <div className="baord">
-            <div className="boces" onClick={(e)=>{toggle(e,3)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,4)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,5)}}></div>
+        <Box id={3} user={user} setUser= {setUser}/>
+            <Box id={4} user={user} setUser= {setUser}/>
+            <Box id={5} user={user} setUser= {setUser}/>
         </div>
 
         <div className="baord">
-            <div className="boces" onClick={(e)=>{toggle(e,6)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,7)}}></div>
-            <div className="boces" onClick={(e)=>{toggle(e,8)}}></div>
+        <Box id={6} user={user} setUser= {setUser}/>
+            <Box id={7} user={user} setUser= {setUser}/>
+            <Box id={8} user={user} setUser= {setUser}/>
         </div>
         <button className="reset">Reset</button>
     </div>
