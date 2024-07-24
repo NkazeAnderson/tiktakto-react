@@ -10,6 +10,7 @@ export const TikTacToe = () => {
 
     let [count, setCount] = React.useState(0);
     let [lock, setLock] = React.useState(false);
+    let tittleRef = React.useRef(null);
 
     const toggle = (e,num) => {
         if(lock){
@@ -24,26 +25,36 @@ export const TikTacToe = () => {
             data[num] = 'O';
             setCount(count+1);
         }
+        checkWin();
     }
 
     const checkWin =()=>{
-        if(data[0]===data[1] && data[1]===data[2] && data[0]!==""){
-            won(data);
+        if(data[0]===data[1] && data[1]===data[2] && data[2]!==""){
+            won(data[2]);
     }
     else if(data[3]===data[4] && data[4]===data[5]&& data[5] !==""){
-        won(data);
+        won(data[5]);
     }
     else if(data[6]===data[7] && data[7]===data[8]&& data[8] !==""){
-        won(data);
+        won(data[8]);
     }
     else if(data[0]===data[3] && data[3]===data[6]&& data[6] !==""){
-        won(data);
+        won(data[6]);
     }
     else if(data[1]===data[4] && data[4]===data[7]&& data[7] !==""){
-        won(data);
+        won(data[7]);
     }
     else if(data[2]===data[5] && data[5]===data[8]&& data[8] !==""){
-        won(data);
+        won(data[8]);
+    }
+    else if(data[0]===data[4] && data[4]===data[8]&& data[8] !==""){
+        won(data[8]);
+    }
+    else if(data[0]===data[1] && data[1]===data[2]&& data[2] !==""){
+        won(data[2]);
+    }
+    else if(data[2]===data[4] && data[4]===data[6]&& data[6] !==""){
+        won(data[6]);
     }
 
     }
@@ -51,15 +62,15 @@ export const TikTacToe = () => {
     const won = (winner) =>{
         setLock(true);
         if(winner==="X"){
-            tittleRef.current.innerHTML = `congratulation <img ${src='cross_icon'} />`
+            tittleRef.current.innerHTML = `congratulation <img ${src='cross_icon'} />`;
         }
         else {
-             tittleRef.current.innerHTML = `congratulation <img ${src='circle_icon'} />`
+             tittleRef.current.innerHTML = `congratulation <img ${src='circle_icon'} />`;
         }
     }
   return (
     <div className='container'>
-        <h1 className='title'>Tic Tac Toe Game in <span>React</span> </h1>
+        <h1 className='title' ref={tittleRef}>Tic Tac Toe Game in <span>React</span> </h1>
         <div className="baord">
             <div className="boces" onClick={(e)=>{toggle(e,0)}}></div>
             <div className="boces" onClick={(e)=>{toggle(e,1)}}></div>
