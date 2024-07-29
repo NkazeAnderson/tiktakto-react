@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import './TikTacToe.css'
 import cross_icon from '../Assets/tik.png'
 import circle_icon from '../Assets/tac.png'
-
+import Box from './MyBox';
+import Board from './Board';
+import Input from './Input';
+import {useEffect} from "react"
 let data = ["", "", "", "", "", "", "", "", ""];
 
-const data1 = [
- 
-]
+export const Context = createContext(null)
+
 function checkIfExist (id){
     return data1.some((item)=>item.selectedBox === id)
 }
@@ -26,46 +28,7 @@ function addData(data) {
     data1.push(data)
 }
 
-function Box({id, user, setUser}) {
 
-    if (checkIfExist(id)){
-        const userFromData = checkIfExistUser(id)
-        return <div className="boces" onClick={(e)=>{
-            if (checkIfExist(id)) {
-                
-            }else{
-                addData({
-                    user: user,
-                    selectedBox: id
-                })
-                setUser(user === "x" ? "o":"x")
-            }
-            
-            
-    
-            console.log(data1)
-        }}>
-            {userFromData === "x" ? "x" : "o"}
-        </div>
-    }
-    
-    return <div className="boces" onClick={(e)=>{
-        if (checkIfExist(id)) {
-            
-        }else{
-            addData({
-                user: user,
-                selectedBox: id
-            })
-            setUser(user === "x" ? "o":"x")
-        }
-        
-
-        console.log(data1)
-    }}>
-        
-    </div>
-}
 
 
 
@@ -73,8 +36,23 @@ export const TikTacToe = () => {
 
     let [count, setCount] = React.useState(0);
     let [user, setUser] = React.useState("x");
+    let [data1, setData1] = React.useState([]);
     let [lock, setLock] = React.useState(false);
     let tittleRef = React.useRef(null);
+
+    const contextData = {
+        user: user,
+        setUser: setUser,
+        data1:data1,
+        setData1: setData1,
+        lock: lock,
+        setLock: setLock
+
+    }
+    
+    useEffect(()=>{
+        console.log("I am use effect")
+    },[lock, user])
 
     const toggle = (count) => {
         if(lock){
@@ -129,27 +107,17 @@ export const TikTacToe = () => {
         }
     }
   return (
-    <div className='container'>
+    <Context.Provider value={contextData} >
+        <Input />
+        <div className='container'>
         <h1 className='title' ref={tittleRef}>Tic Tac Toe Game in <span>React</span> </h1>
-        <div className="baord">
-            <Box id={0} user={user} setUser= {setUser}/>
-            <Box id={1} user={user} setUser= {setUser}/>
-            <Box id={2} user={user} setUser= {setUser}/>
-            
-        </div>
+        <Board firstId={0} user={user} setUser={setUser}/>
+        <Board firstId={3} user={user} setUser={setUser}/>
+        <Board firstId={6} user={user} setUser={setUser}/>
 
-        <div className="baord">
-        <Box id={3} user={user} setUser= {setUser}/>
-            <Box id={4} user={user} setUser= {setUser}/>
-            <Box id={5} user={user} setUser= {setUser}/>
-        </div>
-
-        <div className="baord">
-        <Box id={6} user={user} setUser= {setUser}/>
-            <Box id={7} user={user} setUser= {setUser}/>
-            <Box id={8} user={user} setUser= {setUser}/>
-        </div>
         <button className="reset">Reset</button>
     </div>
+    </Context.Provider>
+    
   )
 }
